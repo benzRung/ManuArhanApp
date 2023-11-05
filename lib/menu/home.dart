@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:minipro/menu/DetailMenu.dart';
 import 'package:minipro/menu/MenuType.dart';
+import 'package:minipro/Services/GetRecipeService.dart';
+import 'package:minipro/models/recipes.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,7 +12,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Widget Menus() {
+  late Recipes recipes;
+  bool isLoading = false;
+  // late String title;
+
+  @override
+  void initState(){
+    super.initState();
+    isLoading = true;
+    // title = 'Loading user...';
+    recipes = Recipes();
+
+    GetRecipeServices.getRecipes().then((userFromServer){
+      setState(() {
+      //  users = Users();
+       recipes =  userFromServer;
+      //  title = widget.title;
+      isLoading = false;
+      });
+    });
+  }
+
+  Widget Menus(index) {
     return Card(
       color: Color.fromARGB(255, 255, 255, 255),
       child: Padding(
@@ -22,21 +45,23 @@ class _HomeState extends State<Home> {
             ListTile(
                 onTap:(){
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Detail()));
+                builder: (context) => Detail(
+                  recipe: recipes!.recipes[index],
+                )));
             },
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  'https://th.bing.com/th/id/R.a55f7d81254d3fa22efc5a1aa73e8fc5?rik=NatOQH1C9h2N9w&pid=ImgRaw&r=0',
+                  '${recipes!.recipes[index].image}',
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
                 ),
               ),
-              title: const Text("เมนู",
+              title: Text("เมนู : ${recipes!.recipes[index].recipeName}",
                   style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0), fontSize: 16)),
-              subtitle: const Text("สูตรของ",
+              subtitle: Text("สูตรของ ${recipes!.recipes[index].user.firstName}",
                   style: TextStyle(
                       color: Color.fromARGB(255, 103, 103, 103), fontSize: 14)),
               trailing: const Icon(Icons.arrow_forward_ios),
@@ -51,18 +76,20 @@ class _HomeState extends State<Home> {
   Widget ListMenus(){
     return Expanded(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: recipes.recipes == null ? 0 : recipes.recipes.length,
         itemBuilder: (BuildContext context, index) {
-          return Menus();
+          return Menus(index);
         },
         ),
       ); 
   }
-  Widget Types() {
+  Widget Types(index) {
     return GestureDetector(
       onTap: () {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => MenuType()));
+      builder: (context) => MenuType(
+        
+      )));
   },
     child: Padding(
       padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
@@ -88,7 +115,7 @@ class _HomeState extends State<Home> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(40),
                 child: Image.network(
-                  'https://picsum.photos/seed/695/600',
+                  '${recipes!.recipes[index].typeFood.iconType}',
                   width: 70,
                   height: 70,
                   fit: BoxFit.cover,
@@ -98,7 +125,7 @@ class _HomeState extends State<Home> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
               child: Text(
-                'Hello World',
+                '${recipes!.recipes[index].typeFood.nameType}',
               ),
             ),
           ],
@@ -120,9 +147,10 @@ class _HomeState extends State<Home> {
           child: ListView.builder(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: recipes.recipes == null ? 0 : recipes.recipes.length,
             itemBuilder: (BuildContext context, index) {
-              return Types();
+              print(index);
+              return Types(index);
             },
           ),
         ));
@@ -147,7 +175,11 @@ class _HomeState extends State<Home> {
       body: Container(
         color: Color.fromARGB(255, 255, 255, 255),
         padding: const EdgeInsets.all(5.0),
-        child: Column(
+        child: isLoading
+        ? const Center(
+          child: CircularProgressIndicator(),
+        )
+        : Column(
           children: <Widget>[
             ListMenuType(),
             Padding(padding: EdgeInsets.only(bottom: 10.0),

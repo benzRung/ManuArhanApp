@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:minipro/Services/GetRecipeService.dart';
+import 'package:minipro/models/recipes.dart';
+
 
 class MenuType extends StatefulWidget{
   const MenuType({Key? key}) : super(key: key);
@@ -8,19 +11,39 @@ class MenuType extends StatefulWidget{
   State<MenuType> createState() => _MenuTypeState();
 }
 
+class _MenuTypeState extends State<MenuType>{
+  late Recipes recipes;
+  bool isLoading = false;
+
+  @override
+  void initState(){
+    super.initState();
+    isLoading = true;
+    // title = 'Loading user...';
+    recipes = Recipes();
+
+    GetRecipeServices.getRecipes().then((userFromServer){
+      setState(() {
+      //  users = Users();
+       recipes =  userFromServer;
+      //  title = widget.title;
+      isLoading = false;
+      });
+    });
+  }
 
 Widget list(){
     return Expanded(
       child: ListView.builder(
         itemCount: 5,
         itemBuilder: (BuildContext context, index) {
-          return Menu();
+          return Menu(index);
         },
         ),
       ); 
   }
 
-Widget Menu(){
+Widget Menu(index){
   return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       color: Colors.white,
@@ -36,7 +59,7 @@ Widget Menu(){
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                'https://picsum.photos/seed/2/600',
+                '${recipes!.recipes[index].typeFood.iconType}',
                 width: 493,
                 height: 200,
                 fit: BoxFit.cover,
@@ -73,7 +96,7 @@ Widget Menu(){
 
 }
 
-class _MenuTypeState extends State<MenuType>{
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

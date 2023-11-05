@@ -3,6 +3,7 @@ import 'package:minipro/Bar/NavBar.dart';
 import 'package:minipro/Log_Re/Dashboard.dart';
 
 
+
 void main() {
   runApp(const MyApp());
 }

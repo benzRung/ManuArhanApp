@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:minipro/Services/PostRecipeService.dart';
+import 'package:minipro/menu/Add.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Add extends StatefulWidget{
   const Add ({Key? key}) : super(key: key);
@@ -7,6 +10,8 @@ class Add extends StatefulWidget{
   
   State<Add> createState() => _AddState();
 }
+
+
 
 Widget AddImage(){
   return Card(
@@ -303,13 +308,58 @@ Padding(
     ],
   ),
 )
-
   ]
 );
 
 }
 
+Widget All() {
+  return Column(
+    children: <Widget>[
+      AddImage(),
+      FromMenu(),
+      SizedBox(height: 40), // เพิ่มระยะห่างด้านบนของปุ่ม
+      ElevatedButton(
+        onPressed: () {
+          fecthData();
+          // ตรวจสอบและบันทึกข้อมูลของเมนูที่ผู้ใช้กรอกได้ที่นี่
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 171, 63)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+          minimumSize: MaterialStateProperty.all(Size(double.infinity, 40)), // กำหนดความสูงเป็น 40
+        ),
+        child: Text(
+          'Post',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+ Future<void> fecthData() async {
+    // สร้าง Map เพื่อเก็บข้อมูลจาก TextFields และรูปภาพ
+    // Map<String, dynamic> data = {
+    //   "recipeName": recipeNameController.text,
+    //   "ingredient": ingredientsController.text,
+    //   "instructions": instructionsController.text,
+    //   "image": selectedImagePath, // รูปภาพที่เลือก
+      // อื่น ๆ ที่คุณต้องการเพิ่มเข้าไป
+      print("Ok");
+    }
+
 class _AddState extends State<Add>{
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -329,8 +379,10 @@ class _AddState extends State<Add>{
         padding: const EdgeInsets.all(5.0),
         child: Column(
           children: <Widget>[
-            AddImage(),
-            FromMenu(),
+            // AddImage(),
+            // FromMenu(),
+            All(),
+            
           ],
         ),
       ),
@@ -338,4 +390,7 @@ class _AddState extends State<Add>{
        
     );
   }
-} 
+
+}
+  
+

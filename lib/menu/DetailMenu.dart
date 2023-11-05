@@ -1,90 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:minipro/models/recipe.dart';
 
-class Detail extends StatefulWidget{
-  const Detail({Key? key}) : super(key: key);
+class Detail extends StatelessWidget{
+  final Recipe recipe;
+  const Detail({Key? key, required this.recipe}) : super(key: key);
   
-  @override
+//   @override
   
-  State<Detail> createState() => _DetailState();
-}
+//   State<Detail> createState() => _DetailState();
+// }
 
-Widget DetailMenu(){
-  return Card(
-    clipBehavior: Clip.antiAliasWithSaveLayer,
-    color: Color.fromARGB(255, 255, 255, 255),
-    elevation: 4,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              'https://picsum.photos/seed/249/600',
-              width: 493,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Align(
-          alignment: AlignmentDirectional(0.00, 0.00),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 10, 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
-                      child: Text(
-                        'User',
-                       style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w700
-                       ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Align(
-                        alignment: AlignmentDirectional(0.00, 0.00),
-                        child: Text(
-                          'Hello World',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      ]
-        ),
-  );
-}
-
-Widget D(){
+ Widget D(){
   return Padding(
   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
   child: Card(
@@ -102,7 +28,7 @@ Widget D(){
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
-              'https://picsum.photos/seed/249/600',
+              '${recipe.image}',
               width: 374,
               height: 200,
               fit: BoxFit.cover,
@@ -113,7 +39,7 @@ Widget D(){
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              'ต้มยำ',
+              '${recipe.recipeName}',
               style: TextStyle(
                     fontFamily: 'Plus Jakarta Sans',
                     fontSize: 20,
@@ -123,7 +49,7 @@ Widget D(){
           ],
         ),
         Text(
-          'สูตรของ :',
+          'สูตรของ :'+recipe.user.firstName+" "+recipe.user.lastName,
           style: TextStyle(
                 fontFamily: 'Plus Jakarta Sans',
                 color: Color(0xFF464646),
@@ -133,7 +59,7 @@ Widget D(){
           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
           child: Container(
             width: 341,
-            height: 400,
+            // height: 400,
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(10),
@@ -163,12 +89,15 @@ Widget D(){
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        '1. Hello World',
+                      Expanded(
+                        child: Text(
+                        '${recipe.ingredient}',
                         style: TextStyle(
                           fontSize: 14,
                         ),
                       ),
+                      ),
+                     
                     ],
                   ),
                 ),
@@ -180,7 +109,7 @@ Widget D(){
           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
           child: Container(
             width: 341,
-            height: 500,
+            // height: 500,
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(10),
@@ -210,11 +139,13 @@ Widget D(){
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        '1. Hello World',
+                      Expanded(
+                        child:Text(
+                        '${recipe.instructions}',
                         style: TextStyle(
                           fontSize: 14,
                         ),
+                      ), 
                       ),
                     ],
                   ),
@@ -229,7 +160,7 @@ Widget D(){
 );
 
 }
-class _DetailState extends State<Detail>{
+// class _DetailState extends State<Detail>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(

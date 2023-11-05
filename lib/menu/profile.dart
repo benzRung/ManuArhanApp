@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:minipro/models/user.dart';
+import 'package:minipro/models/user.dart';
 
 class Profile extends StatefulWidget{
   const Profile({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ Widget ProfileUser(){
           child: ClipRRect(
             borderRadius: BorderRadius.circular(100),
             child: Image.network(
-              'https://picsum.photos/seed/249/600',
+              'https://icons.veryicon.com/png/o/business/multi-color-financial-and-business-icons/user-139.png',
               width: 200,
               height: 200,
               fit: BoxFit.cover,
@@ -64,7 +66,7 @@ Widget ProfileUser(){
                       child: Align(
                         alignment: AlignmentDirectional(0.00, 0.00),
                         child: Text(
-                          'Hello World',
+                          'Email',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 20
@@ -155,7 +157,7 @@ class _ProfileState extends State<Profile>{
         child: Column(
           children: <Widget>[
            ProfileUser(),
-           ListMenus()
+          //  ListMenus()
           ],
         ),
       ),

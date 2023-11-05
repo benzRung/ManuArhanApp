@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:minipro/Bar/NavBar.dart';
+import 'package:minipro/Log_Re/Login.dart';
 import 'package:minipro/menu/home.dart';
 
 
@@ -40,7 +41,8 @@ class _LoginState extends State<Dashboard>{
       ),
       ElevatedButton( onPressed: () async {
         Navigator.push(context,MaterialPageRoute(
-           builder: (context) => NavBar()), // เปลี่ยนเป็นหน้าปลายทางที่คุณต้องการไป);
+          //  builder: (context) => NavBar()), // เปลี่ยนเป็นหน้าปลายทางที่คุณต้องการไป);
+          builder: (context) => LoginScreen())
         );
       },
       style: ElevatedButton.styleFrom(
@@ -58,7 +60,7 @@ class _LoginState extends State<Dashboard>{
         ),
         child: TextButton( onPressed: () async {
         Navigator.push(context,MaterialPageRoute(
-           builder: (context) => NavBar()), // เปลี่ยนเป็นหน้าปลายทางที่คุณต้องการไป);
+           builder: (context) => NavBar()), //สมัครสมาชิก
         );
       },
       style: TextButton.styleFrom(
